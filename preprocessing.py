@@ -42,6 +42,9 @@ def main(file_path):
     # Apply smoothing using a rolling mean with a window size of 5 for further smoothing
     data_cleaned['processed_feed_pressure'] = data_cleaned['feed_pressure'].rolling(window=5, min_periods=1).mean()
 
+    # Round the 'processed_feed_pressure' column to 6 decimal places
+    data_cleaned['processed_feed_pressure'] = data_cleaned['processed_feed_pressure'].round(6)
+
     # Drop the unnecessary columns (feed_pressure, rolling_mean)
     data_cleaned = data_cleaned.drop(columns=['feed_pressure', 'rolling_mean'])
 

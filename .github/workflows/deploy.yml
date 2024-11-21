@@ -50,6 +50,4 @@ jobs:
             # EC2에 SSH로 접속하여 Docker 작업 수행
             docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
             docker pull ${{ secrets.DOCKER_USERNAME }}/fastapi-server:latest
-            docker stop $(docker ps -a -q)
             docker run -d --log-driver=syslog -p 8000:8000 ${{ secrets.DOCKER_USERNAME }}/fastapi-server
-            docker rm $(docker ps --filter 'status=exited' -a -q)

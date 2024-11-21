@@ -51,3 +51,7 @@ async def upload_csv(file: UploadFile = File(...)):
     processed_file_location = await process_csv(file)
     
     return {"filename": file.filename, "message": "File successfully uploaded and processed!", "processed_file": processed_file_location}
+    
+    """
+    AI 예측 수행 및 결과 반환
+    """

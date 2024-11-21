@@ -50,6 +50,12 @@ jobs:
             # EC2에 SSH로 접속하여 Docker 작업 수행
             docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
             docker pull ${{ secrets.DOCKER_USERNAME }}/fastapi-server:latest
-            docker stop $(docker ps -a -q)
-            docker run -d --log-driver=syslog -p 8000:8000 ${{ secrets.DOCKER_USERNAME }}/fastapi-server
-            docker rm $(docker ps --filter 'status=exited' -a -q)
+            
+            # 동일한 이름의 컨테이너가 실행 중이면 삭제
+            if [ $(docker ps -aq -f name=ai-server) ]; then
+              docker stop ai-server
+              docker rm ai-server
+            fi
+            
+            # 새 컨테이너 실행
+            docker run -d --name ai-server --log-driver=syslog -p 8000:8000 ${{ secrets.DOCKER_USERNAME }}/fastapi-server

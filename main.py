@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, render_template
 import os
 import pandas as pd
 import preprocessing  # preprocessing.py 모듈을 임포트
@@ -6,11 +6,11 @@ import preprocessing  # preprocessing.py 모듈을 임포트
 app = Flask(__name__)
 
 # 파일 저장 위치 설정
-UPLOAD_DIR = "uploaded_files"
+UPLOAD_DIR = "uploads/uploaded_files"
 if not os.path.exists(UPLOAD_DIR):
     os.makedirs(UPLOAD_DIR)
 
-PROCESSED_DIR = "processed_files"
+PROCESSED_DIR = "uploads/processed_files"
 if not os.path.exists(PROCESSED_DIR):
     os.makedirs(PROCESSED_DIR)
 
@@ -36,6 +36,13 @@ def process_csv(file):
     processed_data.to_csv(processed_file_location, index=False)
     
     return processed_file_location
+
+@app.route('/')
+def index():
+    """
+    업로드 폼을 표시하는 홈 화면 엔드포인트
+    """
+    return render_template('index.html')
 
 @app.route("/api/v1/predict", methods=["POST"])
 def upload_csv():

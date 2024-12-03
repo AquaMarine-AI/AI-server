@@ -48,5 +48,8 @@ def main(file_path):
     # Drop the unnecessary columns (feed_pressure, rolling_mean)
     data_cleaned = data_cleaned.drop(columns=['feed_pressure', 'rolling_mean'])
 
+    # Rename the column processed_feed_pressure to feed_pressure
+    data_cleaned = data_cleaned.rename(columns={'processed_feed_pressure': 'feed_pressure'})
+    
     # Return the processed DataFrame
     return data_cleaned

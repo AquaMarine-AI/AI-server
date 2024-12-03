@@ -4,3 +4,9 @@ numpy
 matplotlib
 uvicorn
 python-multipart
+flask
+uvicorn
+torch
+pytorch-forecasting
+scikit-learn
+joblib
